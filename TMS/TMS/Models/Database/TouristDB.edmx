@@ -1,0 +1,572 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TouristDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ADinfo">
+          <Key>
+            <PropertyRef Name="adid" />
+          </Key>
+          <Property Name="adid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="advertisename" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="advertisetype" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="advertisebudget" Type="money" Nullable="false" />
+          <Property Name="contactno" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="adminid" />
+          </Key>
+          <Property Name="adminid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adminname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="userid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AdvertiserInfo">
+          <Key>
+            <PropertyRef Name="advertiserid" />
+          </Key>
+          <Property Name="advertiserid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="emailid" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="bookingid" />
+          </Key>
+          <Property Name="bookingid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clientemail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fromdate" Type="datetime" Nullable="false" />
+          <Property Name="todate" Type="datetime" Nullable="false" />
+          <Property Name="pid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="clientid" />
+          </Key>
+          <Property Name="clientid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clientname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="clientemail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="mobilenumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="employeeid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employeeid" />
+          </Key>
+          <Property Name="employeeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employeename" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="salary" Type="float" Nullable="false" />
+          <Property Name="mobilenumber" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="address" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="adminid" Type="int" Nullable="false" />
+          <Property Name="userid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ptype" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="plocation" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="pprice" Type="float" Nullable="false" />
+          <Property Name="creationdate" Type="datetime" Nullable="false" />
+          <Property Name="updatedate" Type="datetime" Nullable="false" />
+          <Property Name="employeeid" Type="int" Nullable="false" />
+          <Property Name="clientid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="role" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Admin_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="Admin">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Booking_Package">
+          <End Role="Package" Type="Self.Package" Multiplicity="1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="employeeid" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="employeeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="adminid" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="adminid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Package_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Package" Type="Self.Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="clientid" />
+            </Principal>
+            <Dependent Role="Package">
+              <PropertyRef Name="clientid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Package_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Package" Type="Self.Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="employeeid" />
+            </Principal>
+            <Dependent Role="Package">
+              <PropertyRef Name="employeeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TouristDBModelStoreContainer">
+          <EntitySet Name="ADinfo" EntityType="Self.ADinfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdvertiserInfo" EntityType="Self.AdvertiserInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Admin_User" Association="Self.FK_Admin_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Admin" EntitySet="Admin" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Booking_Package" Association="Self.FK_Booking_Package">
+            <End Role="Package" EntitySet="Package" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_Employee" Association="Self.FK_Client_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Admin" Association="Self.FK_Employee_Admin">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_User" Association="Self.FK_Employee_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Package_Client" Association="Self.FK_Package_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Package" EntitySet="Package" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Package_Employee" Association="Self.FK_Package_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Package" EntitySet="Package" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TouristDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ADinfo">
+          <Key>
+            <PropertyRef Name="adid" />
+          </Key>
+          <Property Name="adid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="advertisename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="advertisetype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="advertisebudget" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="contactno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="adminid" />
+          </Key>
+          <Property Name="adminid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adminname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Admin_User" FromRole="Admin" ToRole="User" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Admin" FromRole="Admin" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="AdvertiserInfo">
+          <Key>
+            <PropertyRef Name="advertiserid" />
+          </Key>
+          <Property Name="advertiserid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="emailid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="bookingid" />
+          </Key>
+          <Property Name="bookingid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clientemail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fromdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="todate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="pid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Package" Relationship="Self.FK_Booking_Package" FromRole="Booking" ToRole="Package" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="clientid" />
+          </Key>
+          <Property Name="clientid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clientname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="clientemail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="mobilenumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="employeeid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Client_Employee" FromRole="Client" ToRole="Employee" />
+          <NavigationProperty Name="Packages" Relationship="Self.FK_Package_Client" FromRole="Client" ToRole="Package" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employeeid" />
+          </Key>
+          <Property Name="employeeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employeename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="salary" Type="Double" Nullable="false" />
+          <Property Name="mobilenumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="adminid" Type="Int32" Nullable="false" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Admin" Relationship="Self.FK_Employee_Admin" FromRole="Employee" ToRole="Admin" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_Client_Employee" FromRole="Employee" ToRole="Client" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Employee_User" FromRole="Employee" ToRole="User" />
+          <NavigationProperty Name="Packages" Relationship="Self.FK_Package_Employee" FromRole="Employee" ToRole="Package" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ptype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="plocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pprice" Type="Double" Nullable="false" />
+          <Property Name="creationdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="employeeid" Type="Int32" Nullable="false" />
+          <Property Name="clientid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK_Booking_Package" FromRole="Package" ToRole="Booking" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Package_Client" FromRole="Package" ToRole="Client" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Package_Employee" FromRole="Package" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Admins" Relationship="Self.FK_Admin_User" FromRole="User" ToRole="Admin" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_User" FromRole="User" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Admin_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="Admin">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="adminid" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="adminid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Booking_Package">
+          <End Role="Package" Type="Self.Package" Multiplicity="1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="employeeid" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="employeeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Package_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Package" Type="Self.Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="clientid" />
+            </Principal>
+            <Dependent Role="Package">
+              <PropertyRef Name="clientid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Package_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Package" Type="Self.Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="employeeid" />
+            </Principal>
+            <Dependent Role="Package">
+              <PropertyRef Name="employeeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TouristDBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ADinfoes" EntityType="Self.ADinfo" />
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="AdvertiserInfoes" EntityType="Self.AdvertiserInfo" />
+          <EntitySet Name="Bookings" EntityType="Self.Booking" />
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Packages" EntityType="Self.Package" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Admin_User" Association="Self.FK_Admin_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Admin" EntitySet="Admins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Admin" Association="Self.FK_Employee_Admin">
+            <End Role="Admin" EntitySet="Admins" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Booking_Package" Association="Self.FK_Booking_Package">
+            <End Role="Package" EntitySet="Packages" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_Employee" Association="Self.FK_Client_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Package_Client" Association="Self.FK_Package_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Package" EntitySet="Packages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_User" Association="Self.FK_Employee_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Package_Employee" Association="Self.FK_Package_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Package" EntitySet="Packages" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TouristDBModelStoreContainer" CdmEntityContainer="TouristDBEntities1">
+          <EntitySetMapping Name="ADinfoes">
+            <EntityTypeMapping TypeName="TouristDBModel.ADinfo">
+              <MappingFragment StoreEntitySet="ADinfo">
+                <ScalarProperty Name="adid" ColumnName="adid" />
+                <ScalarProperty Name="advertisename" ColumnName="advertisename" />
+                <ScalarProperty Name="advertisetype" ColumnName="advertisetype" />
+                <ScalarProperty Name="advertisebudget" ColumnName="advertisebudget" />
+                <ScalarProperty Name="contactno" ColumnName="contactno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="TouristDBModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="adminid" ColumnName="adminid" />
+                <ScalarProperty Name="adminname" ColumnName="adminname" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdvertiserInfoes">
+            <EntityTypeMapping TypeName="TouristDBModel.AdvertiserInfo">
+              <MappingFragment StoreEntitySet="AdvertiserInfo">
+                <ScalarProperty Name="advertiserid" ColumnName="advertiserid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="emailid" ColumnName="emailid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="TouristDBModel.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="bookingid" ColumnName="bookingid" />
+                <ScalarProperty Name="clientemail" ColumnName="clientemail" />
+                <ScalarProperty Name="fromdate" ColumnName="fromdate" />
+                <ScalarProperty Name="todate" ColumnName="todate" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="TouristDBModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="clientid" ColumnName="clientid" />
+                <ScalarProperty Name="clientname" ColumnName="clientname" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="clientemail" ColumnName="clientemail" />
+                <ScalarProperty Name="mobilenumber" ColumnName="mobilenumber" />
+                <ScalarProperty Name="employeeid" ColumnName="employeeid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="TouristDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="employeeid" ColumnName="employeeid" />
+                <ScalarProperty Name="employeename" ColumnName="employeename" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="mobilenumber" ColumnName="mobilenumber" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="adminid" ColumnName="adminid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Packages">
+            <EntityTypeMapping TypeName="TouristDBModel.Package">
+              <MappingFragment StoreEntitySet="Package">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="pname" ColumnName="pname" />
+                <ScalarProperty Name="ptype" ColumnName="ptype" />
+                <ScalarProperty Name="plocation" ColumnName="plocation" />
+                <ScalarProperty Name="pprice" ColumnName="pprice" />
+                <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+                <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+                <ScalarProperty Name="employeeid" ColumnName="employeeid" />
+                <ScalarProperty Name="clientid" ColumnName="clientid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TouristDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role" ColumnName="role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

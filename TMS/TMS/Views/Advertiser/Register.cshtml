@@ -1,0 +1,17 @@
+﻿@model TMS.Models.Database.Entity.AdvertiserinfoModel
+
+<h2>Register</h2>
+
+<form action="/Advertiser/Register" method="post">
+
+    <input type="text" class="form-control" name="username" placeholder="Username Name" />
+    @Html.ValidationMessageFor(model => model.username)
+    <input type="password" class="form-control" name="password" placeholder="Password" />
+    @Html.ValidationMessageFor(model => model.password)
+    <input type="email" class="form-control" name="emailid" placeholder="Email ID" />
+    @Html.ValidationMessageFor(model => model.emailid)
+
+    <input type="submit" value="Create" class="btn btn-success" />
+
+
+</form>

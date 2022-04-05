@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TouristDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ADinfo">
+    <Key>
+      <PropertyRef Name="adid" />
+    </Key>
+    <Property Name="adid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="advertisename" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="advertisetype" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="advertisebudget" Type="money" Nullable="false" />
+    <Property Name="contactno" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="adminid" />
+    </Key>
+    <Property Name="adminid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="adminname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="userid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AdvertiserInfo">
+    <Key>
+      <PropertyRef Name="advertiserid" />
+    </Key>
+    <Property Name="advertiserid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="emailid" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="bookingid" />
+    </Key>
+    <Property Name="bookingid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="clientemail" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="fromdate" Type="datetime" Nullable="false" />
+    <Property Name="todate" Type="datetime" Nullable="false" />
+    <Property Name="pid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="clientid" />
+    </Key>
+    <Property Name="clientid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="clientname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="clientemail" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="mobilenumber" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="employeeid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="employeeid" />
+    </Key>
+    <Property Name="employeeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="employeename" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="type" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="salary" Type="float" Nullable="false" />
+    <Property Name="mobilenumber" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="address" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="adminid" Type="int" Nullable="false" />
+    <Property Name="userid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Package">
+    <Key>
+      <PropertyRef Name="pid" />
+    </Key>
+    <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="pname" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ptype" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="plocation" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="pprice" Type="float" Nullable="false" />
+    <Property Name="creationdate" Type="datetime" Nullable="false" />
+    <Property Name="updatedate" Type="datetime" Nullable="false" />
+    <Property Name="employeeid" Type="int" Nullable="false" />
+    <Property Name="clientid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="userid" />
+    </Key>
+    <Property Name="userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="role" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Admin_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="Admin">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_Package">
+    <End Role="Package" Type="Self.Package" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Package">
+        <PropertyRef Name="pid" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="pid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Client_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="employeeid" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="employeeid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Admin">
+    <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="adminid" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="adminid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Package_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="Package" Type="Self.Package" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="clientid" />
+      </Principal>
+      <Dependent Role="Package">
+        <PropertyRef Name="clientid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Package_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Package" Type="Self.Package" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="employeeid" />
+      </Principal>
+      <Dependent Role="Package">
+        <PropertyRef Name="employeeid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TouristDBModelStoreContainer">
+    <EntitySet Name="ADinfo" EntityType="Self.ADinfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdvertiserInfo" EntityType="Self.AdvertiserInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Admin_User" Association="Self.FK_Admin_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Admin" EntitySet="Admin" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_Package" Association="Self.FK_Booking_Package">
+      <End Role="Package" EntitySet="Package" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Client_Employee" Association="Self.FK_Client_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Client" EntitySet="Client" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Admin" Association="Self.FK_Employee_Admin">
+      <End Role="Admin" EntitySet="Admin" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_User" Association="Self.FK_Employee_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Package_Client" Association="Self.FK_Package_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="Package" EntitySet="Package" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Package_Employee" Association="Self.FK_Package_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Package" EntitySet="Package" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

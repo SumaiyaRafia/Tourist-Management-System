@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TouristDBModelStoreContainer" CdmEntityContainer="TouristDBEntities1">
+    <EntitySetMapping Name="ADinfoes">
+      <EntityTypeMapping TypeName="TouristDBModel.ADinfo">
+        <MappingFragment StoreEntitySet="ADinfo">
+          <ScalarProperty Name="adid" ColumnName="adid" />
+          <ScalarProperty Name="advertisename" ColumnName="advertisename" />
+          <ScalarProperty Name="advertisetype" ColumnName="advertisetype" />
+          <ScalarProperty Name="advertisebudget" ColumnName="advertisebudget" />
+          <ScalarProperty Name="contactno" ColumnName="contactno" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Admins">
+      <EntityTypeMapping TypeName="TouristDBModel.Admin">
+        <MappingFragment StoreEntitySet="Admin">
+          <ScalarProperty Name="adminid" ColumnName="adminid" />
+          <ScalarProperty Name="adminname" ColumnName="adminname" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdvertiserInfoes">
+      <EntityTypeMapping TypeName="TouristDBModel.AdvertiserInfo">
+        <MappingFragment StoreEntitySet="AdvertiserInfo">
+          <ScalarProperty Name="advertiserid" ColumnName="advertiserid" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="emailid" ColumnName="emailid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bookings">
+      <EntityTypeMapping TypeName="TouristDBModel.Booking">
+        <MappingFragment StoreEntitySet="Booking">
+          <ScalarProperty Name="bookingid" ColumnName="bookingid" />
+          <ScalarProperty Name="clientemail" ColumnName="clientemail" />
+          <ScalarProperty Name="fromdate" ColumnName="fromdate" />
+          <ScalarProperty Name="todate" ColumnName="todate" />
+          <ScalarProperty Name="pid" ColumnName="pid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="TouristDBModel.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="clientid" ColumnName="clientid" />
+          <ScalarProperty Name="clientname" ColumnName="clientname" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="clientemail" ColumnName="clientemail" />
+          <ScalarProperty Name="mobilenumber" ColumnName="mobilenumber" />
+          <ScalarProperty Name="employeeid" ColumnName="employeeid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="TouristDBModel.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="employeeid" ColumnName="employeeid" />
+          <ScalarProperty Name="employeename" ColumnName="employeename" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="salary" ColumnName="salary" />
+          <ScalarProperty Name="mobilenumber" ColumnName="mobilenumber" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="adminid" ColumnName="adminid" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Packages">
+      <EntityTypeMapping TypeName="TouristDBModel.Package">
+        <MappingFragment StoreEntitySet="Package">
+          <ScalarProperty Name="pid" ColumnName="pid" />
+          <ScalarProperty Name="pname" ColumnName="pname" />
+          <ScalarProperty Name="ptype" ColumnName="ptype" />
+          <ScalarProperty Name="plocation" ColumnName="plocation" />
+          <ScalarProperty Name="pprice" ColumnName="pprice" />
+          <ScalarProperty Name="creationdate" ColumnName="creationdate" />
+          <ScalarProperty Name="updatedate" ColumnName="updatedate" />
+          <ScalarProperty Name="employeeid" ColumnName="employeeid" />
+          <ScalarProperty Name="clientid" ColumnName="clientid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="TouristDBModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="role" ColumnName="role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

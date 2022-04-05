@@ -1,0 +1,16 @@
+﻿@model TMS.Models.Database.Entity.AdvertiserinfoModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+<form action="/Advertiser/Login" method="post">
+
+    <input type="text" class="form-control" name="username" placeholder="Username Name" />
+    @Html.ValidationMessageFor(model => model.username)
+    <input type="password" class="form-control" name="password" placeholder="Password" />
+    @Html.ValidationMessageFor(model => model.password)
+
+
+    <input type="submit" value="Login" class="btn btn-success" />
+</form>
